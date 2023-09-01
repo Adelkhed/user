@@ -1,4 +1,3 @@
-#import BankAccount
 class BankAccount:
     all_accounts = []
 
@@ -31,25 +30,53 @@ class BankAccount:
     def display_all_accounts_info(cls):
         for account in cls.all_accounts:
             account.display_account_info()
-class User:
-    
 
-    def __init__(self,name,email):
+class User:
+    def __init__(self, name, email):
         self.name = name
         self.email = email
-        self.account = BankAccount(int_rate=0.02, balance=0)
-        
-    
-    def greeting(self):
-        print(f"Hello My name is {self.name}")
-        
-    # other methods
-    def make_deposit(self, amount):
-    	self.account_balance += amount	# hmmm...the User class doesn't have an account_balance attribute anymore
+        self.accounts = {}  # Utilisez un dictionnaire pour stocker des comptes
 
+    def create_account(self, account_name, int_rate=0, balance=0):
+        # Crée un nouveau compte et l'associe au user
+        self.accounts[account_name] = BankAccount(int_rate, balance)
+        return self
 
-"""  def example_method(self):
-        self.account.deposit(100)		# we can call the BankAccount instance's methods
-    	  print(self.account.balance)		# or access its attributes
-"""
-adel = User("Adel Khedhiri","khedhiri.adel@gmail.com")
+    def make_deposit(self, account_name, amount):
+        # Effectue un dépot dans le compte spécifié
+        if account_name in self.accounts:
+            self.accounts[account_name].deposit(amount)
+        else:
+            print("Le compte spécifié n'existe pas.")
+        return self
+
+    def make_withdrawal(self, account_name, amount):
+        # Effectue un retrait du compte specifié
+        if account_name in self.accounts:
+            self.accounts[account_name].withdraw(amount)
+        else:
+            print("Le compte spécifié n'existe pas.")
+        return self
+
+    def display_user_balance(self, account_name):
+        # Affiche le solde du compte spécifié
+        if account_name in self.accounts:
+            print(f"User : {self.name}, Compte : {account_name}")
+            self.accounts[account_name].display_account_info()
+        else:
+            print("Le compte spécifié n'existe pas.")
+        return self
+
+adel = User("Adel Khedhiri", "khedhiri.adel@gmail.com")
+
+# Créez deux comptes pour l'utilisateur Adel
+adel.create_account("Compte1", int_rate=0.02, balance=500)
+adel.create_account("Compte2", int_rate=0.03, balance=1000)
+
+# Effectuez des opération sur les comptes
+adel.make_deposit("Compte1", 500)
+adel.make_withdrawal("Compte2", 500)
+
+# Affichez les soldes des compte
+adel.display_user_balance("Compte1")
+adel.display_user_balance("Compte2")
