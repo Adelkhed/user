@@ -61,7 +61,7 @@ class User:
     def display_user_balance(self, account_name):
         # Affiche le solde du compte spécifié
         if account_name in self.accounts:
-            print(f"User : {self.name}, Compte : {account_name}")
+            print(f"User : {self.name}, Account : {account_name}")
             self.accounts[account_name].display_account_info()
         else:
             print("Le compte spécifié n'existe pas.")
@@ -69,14 +69,14 @@ class User:
 
 adel = User("Adel Khedhiri", "khedhiri.adel@gmail.com")
 
-# Créez deux comptes pour l'utilisateur Adel
+# Créer 2 comptes pour user Adel
 adel.create_account("Compte1", int_rate=0.02, balance=500)
 adel.create_account("Compte2", int_rate=0.03, balance=1000)
 
-# Effectuez des opération sur les comptes
+# Effectuer des opération sur les comptes de user adel
 adel.make_deposit("Compte1", 500)
 adel.make_withdrawal("Compte2", 500)
 
-# Affichez les soldes des compte
+# Afficher les soldes des compte
 adel.display_user_balance("Compte1")
 adel.display_user_balance("Compte2")
